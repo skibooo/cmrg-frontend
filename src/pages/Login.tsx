@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Mail, Lock } from 'lucide-react';
 import api from '../api/client';
@@ -13,12 +13,26 @@ export default function Login() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
- const handleSubmit = async (e: React.FormEvent) => {
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('error') === 'enumerator_web') {
+      setError('This account is set up for the mobile app. Please use the CMRG Data App on your phone to log in.');
+    }
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
     try {
       const res = await api.post('/auth/login', { email, password });
+
+      if (res.data.user?.role !== 'admin') {
+        setError('This account is set up for the mobile app. Please use the CMRG Data App on your phone to log in.');
+        setLoading(false);
+        return;
+      }
+
       localStorage.setItem('token', res.data.token);
       navigate('/dashboard');
     } catch (err) {
@@ -43,7 +57,7 @@ export default function Login() {
             </div>
             <div className="password-row">
               <label>Password</label>
-                <Link to="/forgot-password" className="forgot-link">Forgot password?</Link>
+              <Link to="/forgot-password" className="forgot-link">Forgot password?</Link>
             </div>
             <div className="input-icon-wrap">
               <Lock size={16} className="input-icon" />
@@ -56,7 +70,6 @@ export default function Login() {
           </form>
           <div className="divider"><span>or</span></div>
           <button className="zoho-btn" type="button">Sign in with Zoho</button>
-          <p className="create-account">Don't have an account? <a href="#">Create Account</a></p>
         </div>
       </div>
       <div className="login-right" style={{ backgroundImage: `url(${bg})` }}>

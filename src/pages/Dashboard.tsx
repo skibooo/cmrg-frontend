@@ -26,11 +26,11 @@ export default function Dashboard() {
     { name: 'Rejected', value: rejected, color: '#c62828' },
   ];
 
-  const chartData = submissions
+   const chartData = submissions
     .slice()
     .sort((a, b) => new Date(a.submitted_at).getTime() - new Date(b.submitted_at).getTime())
-    .map((s, i) => ({ name: `#${i + 1}`, count: i + 1 }));
-
+    .map((_, i) => ({ name: `#${i + 1}`, count: i + 1 }));
+    
   return (
     <div className="dash-container">
       <Sidebar />
