@@ -69,7 +69,13 @@ export default function Login() {
             </button>
           </form>
           <div className="divider"><span>or</span></div>
-          <button className="zoho-btn" type="button">Sign in with Zoho</button>
+                    <button
+            className="zoho-btn"
+            type="button"
+            onClick={() => { window.location.href = 'https://cmrg-backend.onrender.com/auth/zoho/login'; }}
+          >
+            Sign in with Zoho
+          </button>
         </div>
       </div>
       <div className="login-right" style={{ backgroundImage: `url(${bg})` }}>

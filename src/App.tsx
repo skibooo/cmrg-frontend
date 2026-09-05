@@ -3,6 +3,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import ZohoCallback from './pages/ZohoCallback';
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
 import Forms from './pages/Forms';
@@ -20,6 +21,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/zoho-callback" element={<ZohoCallback />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/projects" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
           <Route path="/forms" element={<ProtectedRoute><Forms /></ProtectedRoute>} />
